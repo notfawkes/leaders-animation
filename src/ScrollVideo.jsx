@@ -42,7 +42,7 @@ export default function ScrollVideo() {
       <section className="video-section">
         <video
           ref={videoRef}
-          src="/smooth-lemons.mp4"
+          src="/Our-Team.mp4"
           preload="auto"
           playsInline
           muted
@@ -51,10 +51,9 @@ export default function ScrollVideo() {
 
       {/* Next section */}
       <section className="content-section">
-        <h2>Next Section Appears Here</h2>
+        <h2>Avada Kedavra</h2>
         <p>
-          This is the next part of your page — add your next React component
-          here! The video above will play smoothly as you scroll.
+          Kyu nahi hori padhai?
         </p>
       </section>
     </div>
