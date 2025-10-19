@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./ScrollVideo.css";
 
@@ -12,49 +12,52 @@ export default function ScrollVideo() {
   useEffect(() => {
     const video = videoRef.current;
 
-    // Wait until metadata is loaded
     const handleLoaded = () => {
       const duration = video.duration;
 
-      // GSAP timeline
+      // Main GSAP scroll animation
       gsap.to(video, {
         currentTime: duration,
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "bottom+=200% top", // length of scroll
-          scrub: 1, // makes it smooth
-          pin: true, // keeps video in view while scrolling
+          end: "bottom+=30% top", // scroll distance for full video
+          scrub: true, // ties video progress to scroll
+          pin: true, // keeps video in view
           anticipatePin: 1,
         },
       });
     };
 
     video.addEventListener("loadedmetadata", handleLoaded);
-
-    return () => video.removeEventListener("loadedmetadata", handleLoaded);
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoaded);
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
 
   return (
     <div ref={containerRef} className="scroll-video-container">
-      {/* Scroll-controlled fullscreen video */}
       <section className="video-section">
         <video
           ref={videoRef}
-          src="/Our-Team.mp4"
+          src="/Final-Video-Smooth.mp4"
           preload="auto"
           playsInline
           muted
+          style={{
+            width: "100%",
+            height: "100vh",
+            objectFit: "cover",
+            display: "block",
+          }}
         />
       </section>
 
-      {/* Next section */}
       <section className="content-section">
         <h2>Avada Kedavra</h2>
-        <p>
-          Kyu nahi hori padhai?
-        </p>
+        <p>Kyu nahi hori padhai?</p>
       </section>
     </div>
   );
